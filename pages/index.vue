@@ -52,8 +52,8 @@ async function checkAuth() {
 // ============ 从 localStorage 读取配置 ============
 onMounted(async () => {
   const authed = await checkAuth()
-  authLoading.value = false
   if (!authed) return
+  authLoading.value = false
   const saved = localStorage.getItem('cctts_config')
   if (saved) {
     try {
