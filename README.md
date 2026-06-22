@@ -8,10 +8,11 @@
 ## 功能
 
 - ✅ **高质量中文 TTS** — 基于小米 MiMo-V2.5-TTS 模型
-- ✅ **多种音色预设** — 温柔女声、磁性男声、活泼少年、说书先生等 10 种
-- ✅ **语速自由调节** — Legado 速度 5-50 完整映射
-- ✅ **Legado 一键导入** — 自动生成朗读规则链接
+- ✅ **8 种内置音色** — 冰糖、茉莉（女声）、苏打、白桦（男声）、Mia、Chloe、Milo、Dean
+- ✅ **句间静音控制** — 可调 200-3000ms 停顿时长，朗读更有节奏感
+- ✅ **Legado 一键导入** — 扫码或复制链接，自动添加朗读引擎
 - ✅ **在线试听** — 在浏览器中直接测试效果
+- ✅ **密码保护** — 可选的页面访问密码（ACCESS_PASSWORD）
 - ✅ **一键部署** — GitHub + Vercel，Push to Deploy
 
 ## 技术栈
@@ -33,7 +34,7 @@
 
 ### 方式一：点击按钮一键部署（推荐）
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/你的用户名/cctts&env=MIMO_API_KEY)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/xydwdy/cctts&env=MIMO_API_KEY)
 
 点击上方按钮 → 填入 `MIMO_API_KEY` 环境变量 → 点击 Deploy → 等待部署完成 → 获得 `https://你的项目名.vercel.app` 域名
 
@@ -49,14 +50,15 @@
 
 1. 打开 Legado 阅读 App
 2. 进入 **设置** → **朗读设置** → **朗读引擎** → **添加朗读引擎**
-3. 将从本页面生成的朗读规则复制粘贴进去
-4. 在朗读界面选择该引擎即可
+3. 选择「网络导入」，粘贴本页面生成的导入链接
+4. 或扫描二维码，按引导页操作完成导入
 
 ## 配置说明
 
 | 环境变量 | 说明 | 获取地址 |
 |---------|------|---------|
 | `MIMO_API_KEY` | 小米 MiMo API Key | https://platform.xiaomimimo.com |
+| `ACCESS_PASSWORD` | 页面访问密码（留空则无需密码） | 自定义 |
 
 ## 本地开发
 
