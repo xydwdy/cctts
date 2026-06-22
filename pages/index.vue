@@ -31,6 +31,8 @@ const voiceOptions = [
 const pauseOptions = [200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000]
 
 // ============ 验证登录 ============
+const authLoading = ref(true)
+
 async function checkAuth() {
   const token = localStorage.getItem('cctts_token') || ''
   try {
@@ -50,6 +52,7 @@ async function checkAuth() {
 // ============ 从 localStorage 读取配置 ============
 onMounted(async () => {
   const authed = await checkAuth()
+  authLoading.value = false
   if (!authed) return
   const saved = localStorage.getItem('cctts_config')
   if (saved) {
@@ -170,6 +173,16 @@ async function testVoice() {
 
 <template>
   <div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
+    <!-- Loading state -->
+    <div v-if="authLoading" class="min-h-screen flex items-center justify-center">
+      <div class="text-center">
+        <span class="text-4xl">🎙️</span>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-3">加载中...</p>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <template v-else>
     <!-- Header -->
     <header class="border-b border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm sticky top-0 z-10">
       <div class="max-w-3xl mx-auto px-4 py-4 flex items-center gap-3">
@@ -285,6 +298,7 @@ async function testVoice() {
         基于小米 MiMo-V2.5-TTS 模型 · 开源在 GitHub
       </footer>
     </main>
+    </template>
   </div>
 </template>
 

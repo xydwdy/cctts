@@ -3,6 +3,7 @@ const password = ref('')
 const error = ref('')
 const loading = ref(false)
 const token = ref('')
+const checkingAuth = ref(true)
 
 onMounted(async () => {
   // If no password configured, redirect to home
@@ -14,6 +15,7 @@ onMounted(async () => {
       return
     }
   } catch {}
+  checkingAuth.value = false
 })
 
 async function doLogin() {
@@ -58,7 +60,11 @@ async function doLogin() {
 
 <template>
   <div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center">
-    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-8 w-full max-w-sm mx-4">
+    <div v-if="checkingAuth" class="text-center">
+      <span class="text-4xl">🎙️</span>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-3">加载中...</p>
+    </div>
+    <div v-else class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-8 w-full max-w-sm mx-4">
       <div class="text-center mb-6">
         <span class="text-4xl">🎙️</span>
         <h1 class="text-xl font-bold text-slate-800 dark:text-white mt-2">CCTTS</h1>
