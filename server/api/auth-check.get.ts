@@ -1,4 +1,4 @@
-import { AUTH_COOKIE_NAME } from '../utils/auth'
+import { AUTH_COOKIE_NAME, isTokenValid } from '../utils/auth'
 
 export default defineEventHandler(async (event) => {
   const envPassword = process.env.ACCESS_PASSWORD || ''
