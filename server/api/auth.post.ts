@@ -1,4 +1,4 @@
-import { COOKIE_NAME, createToken, checkBlock, recordFailedAttempt, clearAttempts, getCookieOptions } from '../utils/auth'
+import { COOKIE_NAME, AUTH_COOKIE_NAME, createToken, checkBlock, recordFailedAttempt, clearAttempts, getCookieOptions } from '../utils/auth'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
@@ -43,10 +43,12 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  // Success - clear attempts cookie
+  // Success - clear attempts cookie and set auth token cookie
   const { newCookie } = clearAttempts()
   const opts = getCookieOptions()
   setCookie(event, COOKIE_NAME, newCookie, { ...opts, maxAge: 0 })
+  // Set signed auth token as cookie (30 days expiry)
+  setCookie(event, AUTH_COOKIE_NAME, token, { ...opts, maxAge: 30 * 24 * 60 * 60, sameSite: 'lax' })
 
   return { success: true, token }
 })

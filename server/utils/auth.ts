@@ -1,31 +1,41 @@
 import { randomBytes, createHmac } from 'crypto'
 
-// In-memory token store (token validation is purely server-side, no issue with Vercel)
-const tokens = new Set<string>()
-
 // Rate limiting constants
 const MAX_ATTEMPTS = 3
 const BLOCK_MINUTES = 3
 
 // Cookie config
 export const COOKIE_NAME = 'cctts_auth_attempts'
+export const AUTH_COOKIE_NAME = 'cctts_auth_token'
 const HMAC_SECRET = process.env.COOKIE_SECRET || process.env.ACCESS_PASSWORD || 'cctts-default-secret'
 
-// ── Token functions (unchanged, purely server-side) ──
+// Token expiry: 30 days in seconds
+const TOKEN_MAX_AGE = 30 * 24 * 60 * 60
+
+// ── Token functions (cookie-based, works on Vercel multi-instance) ──
 
 export function createToken(password: string): string | null {
   const envPassword = process.env.ACCESS_PASSWORD || ''
   if (!envPassword) return ''  // No password configured
   if (password !== envPassword) return null
-  const token = randomBytes(32).toString('hex')
-  tokens.add(token)
-  return token
+  // Generate a signed cookie value: base64({t: token, e: expiry}).hmac
+  const payload = Buffer.from(JSON.stringify({ t: randomBytes(32).toString('hex'), e: Date.now() + TOKEN_MAX_AGE * 1000 })).toString('base64')
+  return signPayload(payload)
 }
 
 export function isTokenValid(token: string): boolean {
   const envPassword = process.env.ACCESS_PASSWORD || ''
   if (!envPassword) return true
-  return tokens.has(token)
+  if (!token) return false
+  const payload = token.slice(0, token.lastIndexOf('.'))
+  const signature = token.slice(token.lastIndexOf('.') + 1)
+  const expectedSig = createHmac('sha256', HMAC_SECRET).update(payload).digest('hex')
+  if (signature !== expectedSig) return false
+  try {
+    const data = JSON.parse(Buffer.from(payload, 'base64').toString('utf-8'))
+    if (typeof data.t === 'string' && typeof data.e === 'number' && Date.now() < data.e) return true
+  } catch {}
+  return false
 }
 
 // ── Cookie payload helpers ──
