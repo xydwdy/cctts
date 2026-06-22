@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   const text = (query.text as string) || ''
   const voice = (query.voice as string) || '白桦'
   const pauseMs = parseInt((query.pause_ms as string) || '800')
-  const apiKey = (query.api_key as string) || process.env.MIMO_API_KEY || ''
+  const apiKey = (query.api_key as string) || ''
 
   console.log('[TTS-DIRECT] Request received')
   console.log('[TTS-DIRECT] URL received')

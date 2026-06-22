@@ -26,23 +26,22 @@
 
 ### 准备工作
 
-1. 在 [小米 MiMo 开放平台](https://platform.xiaomimimo.com) 注册账号并获取 **API Key**（当前限时免费）
-2. 一个 [GitHub](https://github.com) 账号
-3. 一个 [Vercel](https://vercel.com) 账号（GitHub 登录即可）
+1. 一个 [GitHub](https://github.com) 账号
+2. 一个 [Vercel](https://vercel.com) 账号（GitHub 登录即可）
 
 ### 部署步骤
 
 ### 方式一：点击按钮一键部署（推荐）
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/xydwdy/cctts&env=MIMO_API_KEY)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/xydwdy/cctts)
 
-点击上方按钮 → 填入 `MIMO_API_KEY` 环境变量 → 点击 Deploy → 等待部署完成 → 获得 `https://你的项目名.vercel.app` 域名
+点击上方按钮 → 点击 Deploy → 等待部署完成 → 获得 `https://你的项目名.vercel.app` 域名
 
 ### 方式二：手动部署
 
 1. Fork / Clone 本仓库
 2. 在 Vercel 导入项目
-3. 设置环境变量 `MIMO_API_KEY`
+3. （可选）设置环境变量 `ACCESS_PASSWORD`
 4. 部署
 5. 获得域名
 
@@ -55,10 +54,9 @@
 
 ## 配置说明
 
-| 环境变量 | 说明 | 获取地址 |
-|---------|------|---------|
-| `MIMO_API_KEY` | 小米 MiMo API Key | https://platform.xiaomimimo.com |
-| `ACCESS_PASSWORD` | 页面访问密码（留空则无需密码） | 自定义 |
+| 环境变量 | 说明 |
+|---------|------|
+| `ACCESS_PASSWORD` | 页面访问密码（留空则无需密码） |
 
 ## 本地开发
 

@@ -3,7 +3,7 @@ export default defineEventHandler(async (event) => {
   const text = (query.text as string) || ''
   const voice = (query.voice as string) || '白桦'
   const pauseMs = parseInt((query.pause_ms as string) || '800')
-  const apiKey = (query.api_key as string) || process.env.MIMO_API_KEY || ''
+  const apiKey = (query.api_key as string) || ''
 
   // Log incoming request for debugging
   console.log('[TTS] Request received')
@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
     throw createError({
       statusCode: 401,
       statusMessage: 'Unauthorized',
-      message: 'API Key is required: provide via query parameter api_key or environment variable MIMO_API_KEY',
+      message: 'API Key is required: provide via query parameter api_key',
     })
   }
 

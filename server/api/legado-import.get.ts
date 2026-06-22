@@ -2,9 +2,7 @@ export default defineEventHandler(async (event) => {
   const query = getQuery(event)
   const voice = (query.voice as string) || '白桦'
   const pauseMs = (query.pause_ms as string) || '500'
-  const userApiKey = (query.api_key as string) || ''
-  const envApiKey = process.env.MIMO_API_KEY || ''
-  const apiKey = userApiKey || envApiKey
+  const apiKey = (query.api_key as string) || ''
 
   // Build the TTS API base URL from the current request
   const host = getRequestHeader(event, 'host') || 'localhost:3000'
