@@ -184,7 +184,7 @@ async function testVoice() {
           <p class="text-xs text-slate-500 dark:text-slate-400">Legado × MiMo TTS 朗读引擎</p>
         </div>
         <div class="ml-auto">
-          <a href="https://github.com" target="_blank"
+          <a href="https://github.com/xydwdy/cctts" target="_blank"
              class="text-sm text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
             GitHub →
           </a>
