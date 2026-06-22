@@ -1,0 +1,18 @@
+# 环境变量（含 API Key 和访问密码，请勿提交）
+.env
+
+# Node 依赖
+node_modules/
+
+# Nuxt 构建输出
+.nuxt/
+.output/
+dist/
+.vercel/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 测试脚本
+test-legado.py
