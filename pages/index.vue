@@ -32,24 +32,19 @@ const pauseOptions = [200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000]
 
 // ============ 验证登录 ============
 async function checkAuth() {
-  const token = localStorage.getItem('cctts_token')
-  if (!token) {
-    window.location.href = '/login'
-    return false
-  }
+  const token = localStorage.getItem('cctts_token') || ''
   try {
     const resp = await fetch(`/api/auth-check?token=${encodeURIComponent(token)}`)
     const data = await resp.json()
-    if (!data.valid) {
-      localStorage.removeItem('cctts_token')
-      window.location.href = '/login'
-      return false
-    }
+    if (data.valid) return true
+    // 服务器要求密码，跳转登录页
+    localStorage.removeItem('cctts_token')
+    window.location.href = '/login'
+    return false
   } catch {
     window.location.href = '/login'
     return false
   }
-  return true
 }
 
 // ============ 从 localStorage 读取配置 ============

@@ -4,6 +4,18 @@ const error = ref('')
 const loading = ref(false)
 const token = ref('')
 
+onMounted(async () => {
+  // If no password configured, redirect to home
+  try {
+    const resp = await fetch('/api/auth-check?token=')
+    const data = await resp.json()
+    if (data.valid) {
+      window.location.href = '/'
+      return
+    }
+  } catch {}
+})
+
 async function doLogin() {
   error.value = ''
   loading.value = true
