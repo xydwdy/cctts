@@ -2,13 +2,12 @@
 const password = ref('')
 const error = ref('')
 const loading = ref(false)
-const token = ref('')
 const checkingAuth = ref(true)
 
 onMounted(async () => {
   // If no password configured, redirect to home
   try {
-    const resp = await fetch('/api/auth-check?token=')
+    const resp = await fetch('/api/auth-check')
     const data = await resp.json()
     if (data.valid) {
       window.location.href = '/'
@@ -46,10 +45,8 @@ async function doLogin() {
     }
 
     const data = await resp.json()
-    token.value = data.token
-
-    // Store token in localStorage and redirect to home
-    localStorage.setItem('cctts_token', data.token)
+    // Token is now stored server-side as httpOnly Cookie only
+    // (set by auth.post.ts), no need to store in localStorage
     window.location.href = '/'
   } catch {
     error.value = '网络错误，请重试'

@@ -8,10 +8,8 @@ export default defineEventHandler(async (event) => {
     return { valid: true }
   }
 
-  // Try cookie first (Vercel multi-instance safe), then query param (backward compat)
-  const cookieToken = getCookie(event, AUTH_COOKIE_NAME) || ''
-  const queryToken = (getQuery(event).token as string) || ''
-  const token = cookieToken || queryToken
+  // Only use Cookie for token (query param removed to prevent URL-based token leakage)
+  const token = getCookie(event, AUTH_COOKIE_NAME) || ''
 
   const valid = isTokenValid(token)
 

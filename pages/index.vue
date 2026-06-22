@@ -34,13 +34,11 @@ const pauseOptions = [200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000]
 const authLoading = ref(true)
 
 async function checkAuth() {
-  const token = localStorage.getItem('cctts_token') || ''
   try {
-    const resp = await fetch(`/api/auth-check?token=${encodeURIComponent(token)}`)
+    const resp = await fetch('/api/auth-check')
     const data = await resp.json()
     if (data.valid) return true
     // 服务器要求密码，跳转登录页
-    localStorage.removeItem('cctts_token')
     window.location.href = '/login'
     return false
   } catch {

@@ -1,4 +1,4 @@
-import { randomBytes, createHmac } from 'crypto'
+import { randomBytes, createHmac, timingSafeEqual } from 'crypto'
 
 // Rate limiting constants
 const MAX_ATTEMPTS = 3
@@ -17,7 +17,10 @@ const TOKEN_MAX_AGE = 30 * 24 * 60 * 60
 export function createToken(password: string): string | null {
   const envPassword = process.env.ACCESS_PASSWORD || ''
   if (!envPassword) return ''  // No password configured
-  if (password !== envPassword) return null
+  // Timing-safe comparison to prevent timing attacks
+  const pwBuf = Buffer.from(password)
+  const envBuf = Buffer.from(envPassword)
+  if (pwBuf.length !== envBuf.length || !timingSafeEqual(pwBuf, envBuf)) return null
   // Generate a signed cookie value: base64({t: token, e: expiry}).hmac
   const payload = Buffer.from(JSON.stringify({ t: randomBytes(32).toString('hex'), e: Date.now() + TOKEN_MAX_AGE * 1000 })).toString('base64')
   return signPayload(payload)
