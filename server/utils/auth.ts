@@ -156,8 +156,8 @@ export function getCookieOptions(): {
 } {
   return {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    secure: false, // Only set to true when behind HTTPS proxy (e.g. Cloudflare + Nginx SSL)
+    sameSite: 'lax',
     path: '/',
   }
 }
