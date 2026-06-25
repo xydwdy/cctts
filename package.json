@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "nuxt dev --host",
     "build": "nuxt build",
+    "build:self-hosted": "NITRO_PRESET=node-server nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview"
   },
